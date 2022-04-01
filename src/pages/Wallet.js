@@ -6,6 +6,8 @@ import { addExpenses, getCurrencies } from '../actions';
 import Header from '../components/Header';
 import Table from '../components/Table';
 
+const INITIAL_TAG = 'Alimentação';
+
 class Wallet extends React.Component {
   constructor() {
     super();
@@ -15,7 +17,7 @@ class Wallet extends React.Component {
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
-      tag: 'Alimentação',
+      tag: INITIAL_TAG,
       expenses: [],
     };
   }
@@ -66,9 +68,9 @@ class Wallet extends React.Component {
     this.setState({
       value: 0,
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: INITIAL_TAG,
     });
   }
 
