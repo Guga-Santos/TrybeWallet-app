@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { removeExpenses } from '../actions';
 
 class Table extends Component {
 handleDeleteBtn = ({ target }) => {
-  const { wallet } = this.props;
-  const filter = wallet.filter((obj, index) => obj[index] !== target.id);
-  console.log(target.id);
-  console.log(wallet);
-  console.log(filter);
+  const { wallet, remove } = this.props;
+  const filter = wallet.filter((obj) => obj.id !== Number(target.id));
+  remove(filter);
 }
 
 render() {
@@ -76,8 +75,13 @@ const mapStateToProps = (state) => ({
   wallet: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  remove: (value) => dispatch(removeExpenses(value)),
+});
+
 Table.propTypes = {
   wallet: PropTypes.arrayOf(Object).isRequired,
+  remove: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
