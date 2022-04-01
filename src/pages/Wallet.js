@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { string } from 'stylelint/lib/formatters';
 import { addExpenses, getCurrencies } from '../actions';
 import Header from '../components/Header';
 import Table from '../components/Table';
@@ -81,7 +80,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, popUp } = this.props;
     const {
       value,
       description,
@@ -93,79 +92,88 @@ class Wallet extends React.Component {
     return (
       <div>
         <Header />
+
         <div className="form-container">
-          <label htmlFor="input-valor">
-            Valor:
-            <input
-              type="number"
-              data-testid="value-input"
-              id="value"
-              onChange={ this.handleChange }
-              value={ value }
-            />
-          </label>
-          <label htmlFor="input-description">
-            Descrição:
-            <input
-              type="text"
-              data-testid="description-input"
-              id="description"
-              onChange={ this.handleChange }
-              value={ description }
-            />
-          </label>
-          <label htmlFor="currency">
-            Moeda:
-            <select
-              id="currency"
-              onChange={ this.handleChange }
-              value={ currency }
-            >
-              {currencies.map((str) => (
-                <option value={ str } key={ Math.random() }>
-                  {str}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label htmlFor="method">
-            Forma de pagamento:
-            <select
-              id="method"
-              onChange={ this.handleChange }
-              value={ method }
-              data-testid="method-input"
-            >
-              <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de crédito">Cartão de crédito</option>
-              <option value="Cartão de débito">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Categoria:
-            <select
-              id="tag"
-              data-testid="tag-input"
-              onChange={ this.handleChange }
-              value={ tag }
-            >
-              <option value="Alimentação">Alimentação</option>
-              <option value="Lazer">Lazer</option>
-              <option value="Trabalho">Trabalho</option>
-              <option value="Transporte">Transporte</option>
-              <option value="Saúde">Saúde</option>
-            </select>
-          </label>
-          <button
-            type="submit"
-            onClick={ this.handleClick }
-            disabled={ isDisable }
-          >
-            Adicionar despesa
-          </button>
+          { popUp ? null
+            : (
+              <>
+                <label htmlFor="input-valor">
+                  Valor:
+                  <input
+                    type="number"
+                    data-testid="value-input"
+                    id="value"
+                    onChange={ this.handleChange }
+                    value={ value }
+                  />
+                </label>
+                <label htmlFor="input-description">
+                  Descrição:
+                  <input
+                    type="text"
+                    data-testid="description-input"
+                    id="description"
+                    onChange={ this.handleChange }
+                    value={ description }
+                  />
+                </label>
+                <label htmlFor="currency">
+                  Moeda:
+                  <select
+                    id="currency"
+                    onChange={ this.handleChange }
+                    value={ currency }
+                  >
+                    {currencies.map((str) => (
+                      <option value={ str } key={ Math.random() }>
+                        {str}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label htmlFor="method">
+                  Forma de pagamento:
+                  <select
+                    id="method"
+                    onChange={ this.handleChange }
+                    value={ method }
+                    data-testid="method-input"
+                  >
+                    <option value="Dinheiro">Dinheiro</option>
+                    <option value="Cartão de crédito">Cartão de crédito</option>
+                    <option value="Cartão de débito">Cartão de débito</option>
+                  </select>
+                </label>
+                <label htmlFor="tag">
+                  Categoria:
+                  <select
+                    id="tag"
+                    data-testid="tag-input"
+                    onChange={ this.handleChange }
+                    value={ tag }
+                  >
+                    <option value="Alimentação">Alimentação</option>
+                    <option value="Lazer">Lazer</option>
+                    <option value="Trabalho">Trabalho</option>
+                    <option value="Transporte">Transporte</option>
+                    <option value="Saúde">Saúde</option>
+                  </select>
+                </label>
+                <button
+                  type="submit"
+                  onClick={ this.handleClick }
+                  disabled={ isDisable }
+                >
+                  Adicionar despesa
+                </button>
+
+              </>
+            )}
           <Table />
         </div>
+
       </div>
+
     );
   }
 }
@@ -177,12 +185,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  popUp: state.wallet.popUp,
 });
 
 Wallet.propTypes = {
   getCur: PropTypes.func.isRequired,
-  currencies: PropTypes.arrayOf(string).isRequired,
+  currencies: PropTypes.arrayOf(String).isRequired,
   addExpense: PropTypes.func.isRequired,
+  popUp: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

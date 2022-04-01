@@ -28,3 +28,15 @@ code {
 
   width: 10vw;
 }
+
+/* POPUP ----------------------------------------------------------------- */
+
+.popUp {
+  width: 40vw;
+  height: 40vw;
+  position: absolute;
+  top: 10vh;
+  left: 30vw;
+  background-color: blueviolet;
+
+}
