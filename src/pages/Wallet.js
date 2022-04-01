@@ -13,9 +13,9 @@ class Wallet extends React.Component {
     this.state = {
       value: 0,
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       expenses: [],
     };
   }
@@ -62,6 +62,14 @@ class Wallet extends React.Component {
   handleClick = async (e) => {
     e.preventDefault();
     await this.handlefetch();
+
+    this.setState({
+      value: 0,
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+    });
   }
 
   handleChange = ({ target }) => {
@@ -78,6 +86,7 @@ class Wallet extends React.Component {
       currency,
       method,
       tag,
+      isDisable,
     } = this.state;
     return (
       <div>
@@ -117,12 +126,13 @@ class Wallet extends React.Component {
               ))}
             </select>
           </label>
-          <label htmlFor="method" data-testid="method-input">
+          <label htmlFor="method">
             Forma de pagamento:
             <select
               id="method"
               onChange={ this.handleChange }
               value={ method }
+              data-testid="method-input"
             >
               <option value="Dinheiro">Dinheiro</option>
               <option value="Cartão de crédito">Cartão de crédito</option>
@@ -147,6 +157,7 @@ class Wallet extends React.Component {
           <button
             type="submit"
             onClick={ this.handleClick }
+            disabled={ isDisable }
           >
             Adicionar despesa
           </button>

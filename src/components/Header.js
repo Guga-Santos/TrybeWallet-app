@@ -17,7 +17,11 @@ class Header extends Component {
           <h3 data-testid="total-field">
             { totalSum.length < 1
               ? 0
-              : totalSum.map((obj) => Number(obj.value)).reduce((a, b) => a + b) }
+              : totalSum
+                .map((obj) => Number(obj.value)
+                * Number(obj.exchangeRates[obj.currency].ask))
+                .reduce((a, b) => a + b)
+                .toFixed(2) }
           </h3>
         </div>
       </div>
