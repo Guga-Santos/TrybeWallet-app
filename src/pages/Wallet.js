@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { addExpenses, getCurrencies } from '../actions';
 import Header from '../components/Header';
 import Table from '../components/Table';
+import purchases from '../images/purchases.svg';
 
 const INITIAL_TAG = 'Alimentação';
 
@@ -12,7 +13,7 @@ class Wallet extends React.Component {
     super();
 
     this.state = {
-      value: 0,
+      value: '',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -65,7 +66,7 @@ class Wallet extends React.Component {
     await this.handlefetch();
 
     this.setState({
-      value: 0,
+      value: '',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -96,7 +97,7 @@ class Wallet extends React.Component {
         <div className="form-container">
           { popUp ? null
             : (
-              <>
+              <div className="inputs-container">
                 <label htmlFor="input-valor">
                   Valor:
                   <input
@@ -167,11 +168,11 @@ class Wallet extends React.Component {
                   Adicionar despesa
                 </button>
 
-              </>
+              </div>
             )}
           <Table />
         </div>
-
+        <img id="purchasesIMG" src={ purchases } alt="purchases" />
       </div>
 
     );

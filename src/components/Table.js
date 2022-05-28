@@ -25,7 +25,7 @@ handleEditBtn = ({ target }) => {
 render() {
   const { wallet, popUp } = this.props;
   return (
-    <div>
+    <div className="table-container">
       { popUp
         ? (
           <div className="popUp">
@@ -34,7 +34,7 @@ render() {
         )
         : (
           <table>
-            <thead>
+            <thead className="thead">
               <tr>
                 <th>Descrição</th>
                 <th>Tag</th>
@@ -47,7 +47,7 @@ render() {
                 <th>Editar/Excluir</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="tbody">
               {
                 wallet.length < 1
                   ? null
@@ -58,8 +58,14 @@ render() {
                       <td>{exp.method}</td>
                       <td>{Number(exp.value).toFixed(2)}</td>
                       <td>{ (exp.exchangeRates[exp.currency].name) }</td>
-                      <td>{ Number(exp.exchangeRates[exp.currency].ask).toFixed(2) }</td>
                       <td>
+                        {exp.currency}
+                        {' '}
+                        {Number(exp.exchangeRates[exp.currency].ask).toFixed(2)}
+                      </td>
+                      <td>
+                        {'R$'}
+                        {' '}
                         { Number(exp.exchangeRates[exp.currency]
                           .ask * exp.value).toFixed(2)}
 

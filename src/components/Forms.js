@@ -54,6 +54,7 @@ class Forms extends Component {
     alter.tag = tag;
 
     console.log(teste);
+    console.log(alter)
 
     popUpOff();
     update(teste);

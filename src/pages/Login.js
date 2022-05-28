@@ -3,6 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { getEmail } from '../actions';
+import Loader from '../components/Loader';
+import image01 from '../images/image01.svg';
+import wallet from '../images/wallet.png';
+import word from '../images/word.png';
+
+const TIMEOUT = 2000;
 
 class Login extends React.Component {
   constructor(props) {
@@ -13,6 +19,7 @@ class Login extends React.Component {
       email: '',
       password: '',
       redirect: false,
+      loader: false,
     };
   }
 
@@ -33,48 +40,70 @@ class Login extends React.Component {
   handleClick = () => {
     const { setEmail } = this.props;
     const { email } = this.state;
+
     this.setState({
-      redirect: true,
+      loader: true,
     });
+
+    setTimeout(() => {
+      this.setState({
+        loader: false,
+        redirect: true,
+      });
+    }, TIMEOUT);
+
     setEmail(email);
   }
 
   render() {
-    const { disabled, email, password, redirect } = this.state;
+    const { disabled, email, password, redirect, loader } = this.state;
 
     return (
-      <div>
-        <h1>Login</h1>
-        <label htmlFor="input-email">
-          Email:
-          <input
-            type="email"
-            data-testid="email-input"
-            id="input-email"
-            onChange={ this.handleChange }
-            value={ email }
-          />
-        </label>
-        <label htmlFor="input-password">
-          Senha:
-          <input
-            type="password"
-            data-testid="password-input"
-            id="input-password"
-            onChange={ this.handleChange }
-            value={ password }
-          />
-        </label>
-        <button
-          type="submit"
-          id="login-btn"
-          disabled={ disabled }
-          onClick={ this.handleClick }
-        >
-          Entrar
-        </button>
-        { redirect && <Redirect push to="/carteira" /> }
-      </div>
+      loader ? <Loader />
+        : <div className="big-container">
+          <div className="msg-container">
+            <div className="logo-container">
+              <img src={ wallet } alt="wallet" />
+              <img id="word-logo" src={ word } alt="word" />
+            </div>
+            <h4 className="phrase">Planeje e gerencia ativamente os seus gastos!</h4>
+            <img src={ image01 } alt="imagem" />
+          </div>
+          <div className="login-container">
+            <h1>LOGIN</h1>
+            <label htmlFor="input-email">
+              Email:
+              <input
+                type="email"
+                data-testid="email-input"
+                id="input-email"
+                onChange={ this.handleChange }
+                value={ email }
+              />
+            </label>
+            <label htmlFor="input-password">
+              Senha:
+              <input
+                type="password"
+                data-testid="password-input"
+                id="input-password"
+                onChange={ this.handleChange }
+                value={ password }
+              />
+            </label>
+            <button
+              type="submit"
+              id="login-btn"
+              disabled={ disabled }
+              onClick={ this.handleClick }
+              className={ disabled ? '' : 'loginBtn' }
+            >
+              Entrar
+            </button>
+            {redirect && <Redirect push to="/carteira" />}
+          </div>
+
+        </div>
     );
   }
 }

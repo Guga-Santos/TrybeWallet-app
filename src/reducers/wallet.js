@@ -3,7 +3,7 @@ import {
   ADD_EXPENSES,
   ADD_TO_WALLET, POP_UP, REMOVE_EXPENSES,
   SET_ID,
-  UPDATE_EXPENSES,
+  UPDATE_EXPENSES
 } from '../actions';
 
 const INITIAL_STATE = {
